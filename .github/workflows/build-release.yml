@@ -53,6 +53,13 @@ jobs:
           
       - name: Download library
         run: git clone --depth=1 https://${{ secrets.ACCESS_TO_WHEN_HELLOWINHLSL_IS_PRIVATE }}:@github.com/Alex0vSky/HelloWinHlsl.git
+      # TODO: Cache library
+      - name: Build library
+        run: | # build from *.sln
+          MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
+          MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Release
+          MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Debug
+          MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Release
         
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.1
