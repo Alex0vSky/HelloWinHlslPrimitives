@@ -52,7 +52,7 @@ jobs:
           echo "strSemver=$strSemver" >> $env:GITHUB_ENV
           
       - name: Download library
-        run: git clone --depth=1 https://github.com/Alex0vSky/HelloWinHlsl HelloWinHlsl
+        run: git clone --depth=1 https://$GIT_TOKEN:@github.com/Alex0vSky/HelloWinHlsl.git
         
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.1
