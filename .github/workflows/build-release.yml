@@ -8,7 +8,6 @@ env:
   strOutExt: exe
   uriGistId: 10da0f016330624e425e835fcfb75333
   strPatchVersionBase: 0
-  release_artifact_name: artifact-build-release-all
 jobs:
   build-release:
     runs-on: windows-latest
@@ -35,10 +34,10 @@ jobs:
           $strVersionBuild=( [int]${{ env.strPatchVersionBase }} + [int]${{ github.run_number }} )
           echo "strVersionBuild=$strVersionBuild" >> $env:GITHUB_ENV
           
-          $strMajorMinor='${{ env.strVersionMajor }}.${{ env.strVersionMinor }}';
+          $strMajorMinor="$strVersionMajor.$strVersionMinor";
           echo "strTag=$strMajorMinor" >> $env:GITHUB_ENV
           echo "strVTag=v$strMajorMinor" >> $env:GITHUB_ENV
-          $strSemver="$strMajorMinor.${{ env.strVersionPatch }}.${{ env.strVersionBuild }}";
+          $strSemver="$strMajorMinor.$strVersionPatch.$strVersionBuild";
           echo "strSemver=$strSemver" >> $env:GITHUB_ENV
 
       - name: Add MSBuild to PATH
