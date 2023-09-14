@@ -2,9 +2,9 @@
 #include "stdafx.h"
 using namespace prj_3d::HelloWinHlsl;
 using namespace prj_3d::HelloWinHlsl::ClientTy;
-using CurDxVer = DxVer::v9;
+//using CurDxVer = DxVer::v9;
 //using CurDxVer = DxVer::v10;
-//using CurDxVer = DxVer::v11;
+using CurDxVer = DxVer::v11;
 //using CurDxVer = DxVer::v12;
 
 template<class T> class primitives; // primary template
@@ -19,8 +19,21 @@ template<> class primitives<DxVer::v9> : public CurClientApp<DxVer::v9> {
 	bool init(DxCtx<T>::cref_ptr_t crpustDxCtx, ToolCtx<T>::cref_ptr_t puoTools, Adjust<T>* poAdjustDxAux) {
         Sys::Hr hr;
 		// Load shaders
-		m_pcVs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Vs( L"primitives_vs_Dx9.cso" );
-		m_pcPs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Ps( L"primitives_ps_Dx9.cso" );
+		m_pcVs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Vs( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_vs_Dx9.hlsl.h"
+					return g_main;
+				}
+			);
+		m_pcPs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Ps( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_ps_Dx9.hlsl.h"
+					return g_main;
+				}
+			);
+
 		if ( !m_pcVs || !m_pcPs )
 			return false;
 		hr = crpustDxCtx ->m_pcD3dDevice ->SetVertexShader( m_pcVs.Get( ) );
@@ -66,9 +79,22 @@ template<> class primitives<DxVer::v10> : public CurClientApp<DxVer::v10> {
 
 	bool init(DxCtx<T>::cref_ptr_t crpustDxCtx, ToolCtx<T>::cref_ptr_t puoTools, Adjust<T>* poAdjustDxAux) {
 		// Load shaders
-		std::vector<char> veShaderByte;
-		m_pcVs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Vs( L"primitives_vs_Dx10.cso", &veShaderByte );
-		m_pcPs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Ps( L"primitives_ps_Dx10.cso" );
+		std::vector<BYTE> veShaderByte;
+		m_pcVs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Vs( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_vs_Dx10.hlsl.h"
+					return g_main;
+				}
+				, &veShaderByte
+			);
+		m_pcPs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Ps( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_ps_Dx10.hlsl.h"
+					return g_main;
+				}
+			);
 		if ( !m_pcVs || !m_pcPs || !veShaderByte.size( ) )
 			return false;
 
@@ -125,9 +151,22 @@ template<> class primitives<DxVer::v11> : public CurClientApp<DxVer::v11> {
 	CPtr< ID3D11Buffer > m_pcConstantBuffer;
 	bool init(DxCtx<T>::cref_ptr_t crpustDxCtx, ToolCtx<T>::cref_ptr_t puoTools, Adjust<T>* poAdjustDxAux) {
 		// Load shaders
-		std::vector<char> veShaderByte;
-		m_pcVs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Vs( L"primitives_vs_Dx11.cso", &veShaderByte );
-		m_pcPs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Ps( L"primitives_ps_Dx11.cso" );
+		std::vector<BYTE> veShaderByte;
+		m_pcVs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Vs( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_vs_Dx11.hlsl.h"
+					return g_main;
+				}
+				, &veShaderByte
+			);
+		m_pcPs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Ps( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_ps_Dx11.hlsl.h"
+					return g_main;
+				}
+			);
 		if ( !m_pcVs || !m_pcPs || !veShaderByte.size( ) )
 			return false;
 
