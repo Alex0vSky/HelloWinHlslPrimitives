@@ -34,13 +34,27 @@ jobs:
           echo "strVersionPatch=$strVersionPatch" >> $env:GITHUB_ENV
           $strVersionBuild=( [int]${{ env.strPatchVersionBase }} + [int]${{ github.run_number }} )
           echo "strVersionBuild=$strVersionBuild" >> $env:GITHUB_ENV
+          
+          $strMajorMinor='${{ env.strVersionMajor }}.${{ env.strVersionMinor }}';
+          echo "strTag=$strMajorMinor" >> $env:GITHUB_ENV
+          echo "strVTag=v$strMajorMinor" >> $env:GITHUB_ENV
+          $strSemver="$strMajorMinor.${{ env.strVersionPatch }}.${{ env.strVersionBuild }}";
+          echo "strSemver=$strSemver" >> $env:GITHUB_ENV
 
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.1
           
+      - name: Cache hwh library
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}\HelloWinHlsl
+          key: cache-key-hwh_library-${{ env.strVersionMajor }}.${{ env.strVersionMinor }}.${{ env.strVersionPatch }}
+        id: cache-hwh_library
+
       - name: Download library
+        if: steps.cache-hwh_library.outputs.cache-hit != 'true'
         run: git clone --depth=1 https://${{ secrets.ACCESS_TO_WHEN_HELLOWINHLSL_IS_PRIVATE }}:@github.com/Alex0vSky/HelloWinHlsl.git
-      - name: Set version
+      - name: Set version to c header
         run: | 
           $ffnVersion='HelloWinHlsl\src\Version.h'
           $env:strText=[System.IO.File]::ReadAllText( $ffnVersion );
@@ -52,15 +66,10 @@ jobs:
           defineReplacer_ 'A0S_VERSION_PATCH' ${{ env.strVersionPatch }}
           defineReplacer_ 'A0S_VERSION_BUILD' ${{ env.strVersionBuild }}
           [System.IO.File]::WriteAllText( $ffnVersion, $env:strText )
-          
-          $strMajorMinor='${{ env.strVersionMajor }}.${{ env.strVersionMinor }}';
-          echo "strTag=$strMajorMinor" >> $env:GITHUB_ENV
-          echo "strVTag=v$strMajorMinor" >> $env:GITHUB_ENV
-          $strSemver="$strMajorMinor.${{ env.strVersionPatch }}.${{ env.strVersionBuild }}";
-          echo "strSemver=$strSemver" >> $env:GITHUB_ENV
-          
+                    
       # TODO: Cache library
       - name: Build library
+        if: steps.cache-hwh_library.outputs.cache-hit != 'true'
         run: | # build from *.sln
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Release
@@ -76,36 +85,15 @@ jobs:
             [System.IO.File]::WriteAllText( $ffnDxSelection, $strText )
           }
           
-          $strDxVer='9';
-          usingReplacer_ $strDxVer
-          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
-          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
-            
-          $strDxVer='10';
-          usingReplacer_ $strDxVer
-          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
-          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
-            
-          $strDxVer='11';
-          usingReplacer_ $strDxVer
-          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
-          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
-            
-          $strDxVer='12';
-          usingReplacer_ $strDxVer
-          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
-          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
-            
-          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Release
-          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Debug
-          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Release
-
-      - name: Renaming to versioning names
-        run: | 
-          mv -v ${{ github.workspace }}\bin\x86\Release\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Release.${{ env.strOutExt }}
-          mv -v ${{ github.workspace }}\bin\x64\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x64-Debug.${{ env.strOutExt }}
-          mv -v ${{ github.workspace }}\bin\x64\Release\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x64-Release.${{ env.strOutExt }}
-
+          @( 'x86', 'x64' ) | % { $strPlatform=$_; 
+              @( 'Debug', 'Release' ) | % { $strConfiguration=$_; 
+                  9..12 | % { $strDxVer='Dx'+$_; 
+                        usingReplacer_ $strDxVer
+                        MSBuild . -noLogo -verbosity:minimal -m -p:Platform=$strPlatform -p:Configuration=$strConfiguration
+                        mv -v ${{ github.workspace }}\bin\$strPlatform\$strConfiguration\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-Dx$strDxVer-$strPlatform-$strConfiguration.${{ env.strOutExt }}
+                  }
+              }
+          }
       - name: Replace '\\' for softprops/action-gh-release
         run: | 
           $strGlob="${{ runner.temp }}/${{ env.strOutName }}-${{ env.strTag }}-*.${{ env.strOutExt }}";
