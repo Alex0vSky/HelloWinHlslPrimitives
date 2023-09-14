@@ -1,5 +1,7 @@
 name: Build and creating release
-on: { workflow_dispatch, push: { paths-ignore: [ '**', '!*.vcxproj', '!src/**', '!.github/workflows/build-release.yml' ] } }
+on: { workflow_dispatch, push: { paths-ignore: [ 
+    '**', '!*.vcxproj', '!*.sln', '!*.cpp', '!_msvcStuff/*', '!resource/*'
+    , '!.github/workflows/build-release.yml' ] } }
 # Configuration
 env:
   strOutName: primitives
@@ -33,24 +35,6 @@ jobs:
           $strVersionBuild=( [int]${{ env.strPatchVersionBase }} + [int]${{ github.run_number }} )
           echo "strVersionBuild=$strVersionBuild" >> $env:GITHUB_ENV
 
-      - name: Set version
-#          $ffnVersion='src\Version.h'
-#          $env:strText=[System.IO.File]::ReadAllText( $ffnVersion );
-#          Function defineReplacer_ ( $name, $value ) {
-#              $env:strText=[Regex]::Replace( $env:strText, "(#define\s+$name\s+)\d+", ( '${1}' + $value ) );
-#          }
-#          defineReplacer_ 'A0S_VERSION_MAJOR' ${{ env.strVersionMajor }}
-#          defineReplacer_ 'A0S_VERSION_MINOR' ${{ env.strVersionMinor }}
-#          defineReplacer_ 'A0S_VERSION_PATCH' ${{ env.strVersionPatch }}
-#          defineReplacer_ 'A0S_VERSION_BUILD' ${{ env.strVersionBuild }}
-#          [System.IO.File]::WriteAllText( $ffnVersion, $env:strText )
-        run: | 
-          $strMajorMinor='${{ env.strVersionMajor }}.${{ env.strVersionMinor }}';
-          echo "strTag=$strMajorMinor" >> $env:GITHUB_ENV
-          echo "strVTag=v$strMajorMinor" >> $env:GITHUB_ENV
-          $strSemver="$strMajorMinor.${{ env.strVersionPatch }}.${{ env.strVersionBuild }}";
-          echo "strSemver=$strSemver" >> $env:GITHUB_ENV
-
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.1
           
@@ -64,6 +48,25 @@ jobs:
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Debug
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Release
         
+      - name: Set version
+        run: | 
+          $ffnVersion='HelloWinHlsl\src\Version.h'
+          $env:strText=[System.IO.File]::ReadAllText( $ffnVersion );
+          Function defineReplacer_ ( $name, $value ) {
+              $env:strText=[Regex]::Replace( $env:strText, "(#define\s+$name\s+)\d+", ( '${1}' + $value ) );
+          }
+          defineReplacer_ 'A0S_VERSION_MAJOR' ${{ env.strVersionMajor }}
+          defineReplacer_ 'A0S_VERSION_MINOR' ${{ env.strVersionMinor }}
+          defineReplacer_ 'A0S_VERSION_PATCH' ${{ env.strVersionPatch }}
+          defineReplacer_ 'A0S_VERSION_BUILD' ${{ env.strVersionBuild }}
+          [System.IO.File]::WriteAllText( $ffnVersion, $env:strText )
+          
+          $strMajorMinor='${{ env.strVersionMajor }}.${{ env.strVersionMinor }}';
+          echo "strTag=$strMajorMinor" >> $env:GITHUB_ENV
+          echo "strVTag=v$strMajorMinor" >> $env:GITHUB_ENV
+          $strSemver="$strMajorMinor.${{ env.strVersionPatch }}.${{ env.strVersionBuild }}";
+          echo "strSemver=$strSemver" >> $env:GITHUB_ENV
+
       - name: Build release
         run: | # build from *.sln
           MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
