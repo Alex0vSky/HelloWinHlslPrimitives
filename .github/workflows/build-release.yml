@@ -67,21 +67,41 @@ jobs:
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Debug
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Release
         
-      - name: Build release
+      - name: Build release and renaming to versioning names
         run: | # build from *.sln
+          Function usingReplacer_ ( $value ) {
+            $ffnDxSelection='primitives.cpp'
+            $strText=[System.IO.File]::ReadAllText( $ffnDxSelection );
+            $strText=[Regex]::Replace( $strText, "^(using\s+CurDxVer\s*=\s*DxVer::v)\d+", ( '${1}' + $value ), [System.Text.RegularExpressions.RegexOptions]::Multiline );
+            [System.IO.File]::WriteAllText( $ffnDxSelection, $strText )
+          }
+          
+          $strDxVer='9';
+          usingReplacer_ $strDxVer
           MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
+          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
+            
+          $strDxVer='10';
+          usingReplacer_ $strDxVer
+          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
+          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
+            
+          $strDxVer='11';
+          usingReplacer_ $strDxVer
+          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
+          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
+            
+          $strDxVer='12';
+          usingReplacer_ $strDxVer
+          MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
+          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug-Dx$strDxVer.${{ env.strOutExt }}
+            
           MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Release
           MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Debug
           MSBuild . -noLogo -verbosity:minimal -m -p:Platform=x64 -p:Configuration=Release
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.release_artifact_name }}
-          path: |
-            ${{ env.dirExe }}\**\*.${{ env.strOutExt }}
 
       - name: Renaming to versioning names
         run: | 
-          mv -v ${{ github.workspace }}\bin\x86\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Debug.${{ env.strOutExt }}
           mv -v ${{ github.workspace }}\bin\x86\Release\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x86-Release.${{ env.strOutExt }}
           mv -v ${{ github.workspace }}\bin\x64\Debug\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x64-Debug.${{ env.strOutExt }}
           mv -v ${{ github.workspace }}\bin\x64\Release\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-x64-Release.${{ env.strOutExt }}
