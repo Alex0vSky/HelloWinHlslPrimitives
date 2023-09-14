@@ -92,7 +92,7 @@ jobs:
                         MSBuild . -noLogo -verbosity:minimal -m -p:Platform=$strPlatform -p:Configuration=$strConfiguration
                         $dst="${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-Dx$strDxVer-$strPlatform-$strConfiguration.${{ env.strOutExt }}";
                         mv -v ${{ github.workspace }}\bin\$strPlatform\$strConfiguration\${{ env.strOutName }}.${{ env.strOutExt }} $dst
-                        Compress-Archive -Path $dst -DestinationPath $dst.zip
+                        Compress-Archive -Path "$dst" -DestinationPath "${dst}.zip"
                   }
               }
           }
