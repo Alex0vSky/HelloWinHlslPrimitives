@@ -90,13 +90,15 @@ jobs:
                   9..12 | % { $strDxVer=$_; 
                         usingReplacer_ $strDxVer
                         MSBuild . -noLogo -verbosity:minimal -m -p:Platform=$strPlatform -p:Configuration=$strConfiguration
-                        mv -v ${{ github.workspace }}\bin\$strPlatform\$strConfiguration\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-Dx$strDxVer-$strPlatform-$strConfiguration.${{ env.strOutExt }}
+                        $dst="${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-Dx$strDxVer-$strPlatform-$strConfiguration.${{ env.strOutExt }}";
+                        mv -v ${{ github.workspace }}\bin\$strPlatform\$strConfiguration\${{ env.strOutName }}.${{ env.strOutExt }} $dst
+                        Compress-Archive -Path $dst -DestinationPath $dst.zip
                   }
               }
           }
       - name: Replace '\\' for softprops/action-gh-release
         run: | 
-          $strGlob="${{ runner.temp }}/${{ env.strOutName }}-${{ env.strTag }}-*.${{ env.strOutExt }}";
+          $strGlob="${{ runner.temp }}/${{ env.strOutName }}-${{ env.strTag }}-*.${{ env.strOutExt }}.zip";
           $strGlob = $strGlob -replace '\\','/';
           echo "strGlob=$strGlob" >> $env:GITHUB_ENV
 
