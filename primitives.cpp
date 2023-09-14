@@ -4,8 +4,8 @@ using namespace prj_3d::HelloWinHlsl;
 using namespace prj_3d::HelloWinHlsl::ClientTy;
 //using CurDxVer = DxVer::v9;
 //using CurDxVer = DxVer::v10;
-using CurDxVer = DxVer::v11;
-//using CurDxVer = DxVer::v12;
+//using CurDxVer = DxVer::v11;
+using CurDxVer = DxVer::v12;
 
 template<class T> class primitives; // primary template
 
@@ -228,8 +228,20 @@ template<> class primitives<DxVer::v12> : public CurClientApp<DxVer::v12> {
 
 	bool init(DxCtx<T>::cref_ptr_t crpustDxCtx, ToolCtx<T>::cref_ptr_t puoTools, Adjust<T>* poAdjustDxAux) {
 		// Load shaders
-		m_pcVs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Vs( L"primitives_vs_Dx12.cso" );
-		m_pcPs = puoTools ->shader( ) ->loader( ) ->byteCode( ) ->fromFile( ) ->Ps( L"primitives_ps_Dx12.cso" );
+		m_pcVs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Vs( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_vs_Dx12.hlsl.h"
+					return g_main;
+				}
+			);
+		m_pcPs = puoTools ->shader( ) ->loader( ) ->arrayC( ) ->fromHeader( ) ->Ps( 
+				[]() ->const auto & {
+					static 
+#include "resource\primitives_ps_Dx12.hlsl.h"
+					return g_main;
+				}
+			);
 		if ( !m_pcVs || !m_pcPs )
 			return false;
 		// Get input layout
