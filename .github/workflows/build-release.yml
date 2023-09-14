@@ -87,7 +87,7 @@ jobs:
           
           @( 'x86', 'x64' ) | % { $strPlatform=$_; 
               @( 'Debug', 'Release' ) | % { $strConfiguration=$_; 
-                  9..12 | % { $strDxVer='Dx'+$_; 
+                  9..12 | % { $strDxVer=$_; 
                         usingReplacer_ $strDxVer
                         MSBuild . -noLogo -verbosity:minimal -m -p:Platform=$strPlatform -p:Configuration=$strConfiguration
                         mv -v ${{ github.workspace }}\bin\$strPlatform\$strConfiguration\${{ env.strOutName }}.${{ env.strOutExt }} ${{ runner.temp }}\${{ env.strOutName }}-${{ env.strTag }}-Dx$strDxVer-$strPlatform-$strConfiguration.${{ env.strOutExt }}
