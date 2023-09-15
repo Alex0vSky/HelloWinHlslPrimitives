@@ -2,10 +2,10 @@
 #include "stdafx.h"
 using namespace prj_3d::HelloWinHlsl;
 using namespace prj_3d::HelloWinHlsl::ClientTy;
-//using CurDxVer = DxVer::v9;
+using CurDxVer = DxVer::v9;
 //using CurDxVer = DxVer::v10;
 //using CurDxVer = DxVer::v11;
-using CurDxVer = DxVer::v12;
+//using CurDxVer = DxVer::v12;
 
 template<class T> class primitives; // primary template
 
@@ -13,7 +13,7 @@ template<> class primitives<DxVer::v9> : public CurClientApp<DxVer::v9> {
 	using T = DxVer::v9;
 	CPtr< IDirect3DVertexShader9 > m_pcVs;
 	CPtr< IDirect3DPixelShader9 > m_pcPs;
-	CPtr< IDirect3DVertexBuffer9 > m_cpVertexBuf;
+	CPtr< IDirect3DVertexBuffer9 > m_pcVertexBuf;
 	D3DPRIMITIVETYPE m_enuPrimitiveType;
 	UINT m_uStartVertex, m_uPrimitiveCount;
 	bool init(DxCtx<T>::cref_ptr_t crpustDxCtx, ToolCtx<T>::cref_ptr_t puoTools, Adjust<T>* poAdjustDxAux) {
@@ -43,11 +43,11 @@ template<> class primitives<DxVer::v9> : public CurClientApp<DxVer::v9> {
 		auto stBufV = puoTools ->quad( ) ->createVertexBuf( );
 		if ( !stBufV )
 			return false;
-		m_cpVertexBuf = stBufV ->m_stVertexBuf.m_pcBuffer;
+		m_pcVertexBuf = stBufV ->m_stVertexBuf.m_pcBuffer;
 		m_enuPrimitiveType = stBufV ->m_enuPrimitiveType;
 		m_uStartVertex = stBufV ->m_uStartVertex;
 		m_uPrimitiveCount = stBufV ->m_uPrimitiveCount;
-		crpustDxCtx ->m_pcD3dDevice ->SetStreamSource( 0, m_cpVertexBuf.Get( ), 0, stBufV ->m_uStride );
+		crpustDxCtx ->m_pcD3dDevice ->SetStreamSource( 0, m_pcVertexBuf.Get( ), 0, stBufV ->m_uStride );
 		crpustDxCtx ->m_pcD3dDevice ->SetFVF( stBufV ->m_stVertexBuf.m_dwFVF );
 		
 		// Shader constants
@@ -73,8 +73,8 @@ template<> class primitives<DxVer::v10> : public CurClientApp<DxVer::v10> {
 	using T = DxVer::v10;
 	CPtr< ID3D10VertexShader > m_pcVs;
 	CPtr< ID3D10PixelShader > m_pcPs;
-	CPtr< ID3D10InputLayout> m_cpLayout;
-	CPtr< ID3D10Buffer > m_cpVertexBuf;
+	CPtr< ID3D10InputLayout> m_pcLayout;
+	CPtr< ID3D10Buffer > m_pcVertexBuf;
 	CPtr< ID3D10Buffer > m_pcConstantBuffer;
 
 	bool init(DxCtx<T>::cref_ptr_t crpustDxCtx, ToolCtx<T>::cref_ptr_t puoTools, Adjust<T>* poAdjustDxAux) {
@@ -102,15 +102,15 @@ template<> class primitives<DxVer::v10> : public CurClientApp<DxVer::v10> {
 		crpustDxCtx ->m_pcD3dDevice ->PSSetShader( m_pcPs.Get( ) );
 
 		// Set vertex input layout
-		m_cpLayout = puoTools ->quad( ) ->createLayout( veShaderByte );
-		if ( !m_cpLayout )
+		m_pcLayout = puoTools ->quad( ) ->createLayout( veShaderByte );
+		if ( !m_pcLayout )
 			return false;
-		crpustDxCtx ->m_pcD3dDevice ->IASetInputLayout( m_cpLayout.Get( ) );
+		crpustDxCtx ->m_pcD3dDevice ->IASetInputLayout( m_pcLayout.Get( ) );
 		// Create and set vertex buffer
 		auto stBufV = puoTools ->quad( ) ->createVertexBuf( );
 		if ( !stBufV )
 			return false;
-		m_cpVertexBuf = stBufV ->m_stVertexBuf.m_pcBuffer;
+		m_pcVertexBuf = stBufV ->m_stVertexBuf.m_pcBuffer;
 		crpustDxCtx ->m_pcD3dDevice ->IASetVertexBuffers( 0, 
 				stBufV ->m_stVertexBuf.c_uNumBuffers, stBufV ->m_stVertexBuf.m_veBuffers.data( ), stBufV ->m_stVertexBuf.m_veStride.data( ), stBufV ->m_stVertexBuf.m_veOffset.data( )
 			);
@@ -146,8 +146,8 @@ template<> class primitives<DxVer::v11> : public CurClientApp<DxVer::v11> {
 	using T = DxVer::v11;
 	CPtr< ID3D11VertexShader > m_pcVs;
 	CPtr< ID3D11PixelShader > m_pcPs;
-	CPtr< ID3D11InputLayout> m_cpLayout;
-	CPtr< ID3D11Buffer > m_cpVertexBuf;
+	CPtr< ID3D11InputLayout> m_pcLayout;
+	CPtr< ID3D11Buffer > m_pcVertexBuf;
 	CPtr< ID3D11Buffer > m_pcConstantBuffer;
 	bool init(DxCtx<T>::cref_ptr_t crpustDxCtx, ToolCtx<T>::cref_ptr_t puoTools, Adjust<T>* poAdjustDxAux) {
 		// Load shaders
@@ -174,15 +174,15 @@ template<> class primitives<DxVer::v11> : public CurClientApp<DxVer::v11> {
 		crpustDxCtx ->m_pcDeviceContext ->PSSetShader( m_pcPs.Get( ), nullptr, 0 );
 
 		// Set vertex input layout
-		m_cpLayout = puoTools ->quad( ) ->createLayout( veShaderByte );
-		if ( !m_cpLayout )
+		m_pcLayout = puoTools ->quad( ) ->createLayout( veShaderByte );
+		if ( !m_pcLayout )
 			return false;
-		crpustDxCtx ->m_pcDeviceContext ->IASetInputLayout( m_cpLayout.Get( ) );
+		crpustDxCtx ->m_pcDeviceContext ->IASetInputLayout( m_pcLayout.Get( ) );
 		// Create and set vertex buffer
 		auto stBufV = puoTools ->quad( ) ->createVertexBuf( );
 		if ( !stBufV )
 			return false;
-		m_cpVertexBuf = stBufV ->m_stVertexBuf.m_pcBuffer;
+		m_pcVertexBuf = stBufV ->m_stVertexBuf.m_pcBuffer;
 		crpustDxCtx ->m_pcDeviceContext ->IASetVertexBuffers( 0, 
 				stBufV ->m_stVertexBuf.c_uNumBuffers, stBufV ->m_stVertexBuf.m_veBuffers.data( ), stBufV ->m_stVertexBuf.m_veStride.data( ), stBufV ->m_stVertexBuf.m_veOffset.data( )
 			);

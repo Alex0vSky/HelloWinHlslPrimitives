@@ -279,14 +279,15 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">3.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">3.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">3.0</ShaderModel>
+	  
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">3.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">3.0</ShaderModel>
-
+	  
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -294,7 +295,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
@@ -313,7 +314,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">3.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">3.0</ShaderModel>
-
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -321,7 +321,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
@@ -340,7 +340,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">4.0</ShaderModel>
-
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -348,7 +347,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
@@ -367,7 +366,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">4.0</ShaderModel>
-
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -375,7 +373,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
@@ -394,7 +392,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">4.0</ShaderModel>
-
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -402,7 +399,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
@@ -421,7 +418,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">4.0</ShaderModel>
-
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -429,7 +425,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
@@ -448,7 +444,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">4.0</ShaderModel>
-
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -456,7 +451,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
@@ -475,7 +470,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">4.0</ShaderModel>
-
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Fullpath).h</HeaderFileOutput>
@@ -483,7 +477,7 @@
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Fullpath).h</HeaderFileOutput>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>	  
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">%(Fullpath).h</HeaderFileOutput>
       <VariableName Condition="'$(Configuration)|$(Platform)'=='FastBuild|Win32'">g_main</VariableName>
       <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='FastBuild|x64'">%(Fullpath).h</HeaderFileOutput>
