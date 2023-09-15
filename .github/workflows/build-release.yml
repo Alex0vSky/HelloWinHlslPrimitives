@@ -43,15 +43,8 @@ jobs:
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.1
           
-      - name: Cache hwh library
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}\HelloWinHlsl
-          key: cache-key-hwh_library-${{ env.strVersionMajor }}.${{ env.strVersionMinor }}.${{ env.strVersionPatch }}
-        id: cache-hwh_library
-
       - name: Download library
-        if: steps.cache-hwh_library.outputs.cache-hit != 'true'
+#        if: steps.cache-hwh_library.outputs.cache-hit != 'true'
         run: git clone --depth=1 https://${{ secrets.ACCESS_TO_WHEN_HELLOWINHLSL_IS_PRIVATE }}:@github.com/Alex0vSky/HelloWinHlsl.git
       - name: Set version to c header
         run: | 
@@ -66,9 +59,8 @@ jobs:
           defineReplacer_ 'A0S_VERSION_BUILD' ${{ env.strVersionBuild }}
           [System.IO.File]::WriteAllText( $ffnVersion, $env:strText )
                     
-      # TODO: Cache library
       - name: Build library
-        if: steps.cache-hwh_library.outputs.cache-hit != 'true'
+#        if: steps.cache-hwh_library.outputs.cache-hit != 'true'
         run: | # build from *.sln
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Debug
           MSBuild HelloWinHlsl\HelloWinHlsl.sln -noLogo -verbosity:minimal -m -p:Platform=x86 -p:Configuration=Release
