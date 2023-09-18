@@ -11,7 +11,7 @@ https://en.wikipedia.org/wiki/DirectX
 
 Using [HelloWinHlsl](https://github.com/Alex0vSky/HelloWinHlsl) to draw primitives with shaders in available version of DirectX
 
-![Untitled](https://github.com/Alex0vSky/HelloWinHlslPrimitives/assets/52796897/a8889201-5e02-4d9e-ab51-c8ab3ff5bcd3)
+![](https://github.com/Alex0vSky/alex0vsky.github.io/blob/main/assets/images/HelloWinHlslPrimitives.png)
 
 ## Features
 
