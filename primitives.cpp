@@ -282,11 +282,11 @@ template<> class primitives<DxVer::v12> : public CurClientApp<DxVer::v12> {
 	void render_frame(DxCtx<T>::cref_ptr_t, Dynamic<T>::cref_ptr_t crpsoDynamic) {
 		// Record commands DirectX 12.
 		crpsoDynamic ->m_pcCommandList ->IASetVertexBuffers( 0, 1, &m_stVertexBufferView );
-        crpsoDynamic ->m_pcCommandList ->IASetPrimitiveTopology( m_enuPrimTopology );
+		crpsoDynamic ->m_pcCommandList ->IASetPrimitiveTopology( m_enuPrimTopology );
 
 		float ClearColor[4] = { 0.0f, 0.25f, 0.25f, 0.55f };
 		crpsoDynamic ->m_pcCommandList ->ClearRenderTargetView( crpsoDynamic ->m_stRtvHandle, ClearColor, 0, nullptr );
-		m_puoConstBufAccessor ->passToShader( crpsoDynamic ->m_pcCommandList );
+		m_puoConstBufAccessor ->passToShader( crpsoDynamic ->m_uFrameIndex );
 		// Draw on quad
 		crpsoDynamic ->m_pcCommandList ->DrawInstanced( 4, 1, 0, 0 );
 	}
